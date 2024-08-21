@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <!-- This is JavaScript SDK -->
+    <script src="https://static.sensorsdata.cn/sdk/1.26.6/sensorsdata.min.js"></script>
+    <script>
+		var sensors = window['sensorsDataAnalytic201505'];
+		sensors.init({
+		  server_url: 'https://demosink-global.sensorsdata.com/sa?project=default',
+          heatmap: {
+            //default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭。
+            clickmap:'not_collect',
+           //default 表示开启，自动采集 $WebStay 事件，可以设置 'not_collect' 表示关闭。
+            scroll_notice_map:'default'
+          },
+          show_log:true
+
+		});
+        ///-------------------------step1：这里输入您的名字「开始」------------------
+         sensors.resetAnonymousIdentity('lzlid3', true);
+        ///-------------------------step1：这里输入您的名字「结束」------------------
+	
+        sensors.quick('autoTrack');
+		</script>
+    <style>
+        #prompt {
+	        color:gray;
+	        line-height:5%;  
+	}
+        button{background-color:rgb(113, 210, 113)}
+
+    </style>
+</head>
+
+<body>
+    <h1>Web 页面</h1>
+    <pre id="prompt">默认采集 $pageview/$WebClick 事件、a/button/input 的点击行为</pre> 
+    <!-- <hr> -->
+
+    <h2><strong>1.注册登录</strong></h2>
+    <p>
+    <label for="TestLabel">手机号: </label>
+    <input type="text" sensors-disable=true placeholder="输入手机号" id="input_mobile"/>
+    <button type="button" id="register">注册</button>
+    <button type="button" id="unbind">解绑</button>
+    <script>
+        // 这里是点击注册手机号，触发的动作
+        document.getElementById("register").onclick = function(){
+            //这里可以取到用户输入的手机号内容
+            var mobile = document.getElementById("input_mobile").value
+             //alert("请编辑器打开文件，解锁手机号绑定功能")
+            // step2 解注释下面------中间的代码（神策sdk bind接口），注册手机号进行绑定，并注释掉alert,保存文本后，刷新界面，点击按钮
+       
+             // ----------------------------------------
+
+            sensors.bind("$identity_mobile", mobile)
+
+             // ----------------------------------------
+        
+        }
+        document.getElementById("unbind").onclick = function(){
+            //alert("请编辑器打开文件，解锁手机号解绑功能")
+            // step5 解注释下面------中间的代码（神策sdk unbind接口），手机号进行解绑，并注释掉alert,保存文本后，刷新界面，点击按钮
+
+             // ----------------------------------------
+
+            sensors.unbind("$identity_mobile",document.getElementById("input_mobile").value)
+
+             // ----------------------------------------
+        }
+    </script>
+   </p>
+   <p>
+    <label for="TestLabel">微信号: </label>
+    <input type="text" sensors-disable=true placeholder="输入unionid" id="input_unionid"/>
+    <button type="button" id="wx_bind">绑定</button>
+    <button type="button" id="wx_unbind">解绑</button>
+    <script>
+        document.getElementById("wx_bind").onclick = function(){
+            //alert("请编辑器打开文件，解锁微信号绑定功能")
+            // step3 解注释下面------中间的代码（神策sdk bind接口），微信号进行绑定，并注释掉alert,保存文本后，刷新界面，点击按钮
+            // ----------------------------------------
+
+             sensors.bind("$identity_mp_unionid",document.getElementById("input_unionid").value)
+
+            // ----------------------------------------
+        }
+        document.getElementById("wx_unbind").onclick = function(){
+            //alert("请编辑器打开文件，解锁微信号解绑功能")
+            // step6 解注释下面------中间的代码（神策sdk unbind接口），微信号进行解绑，并注释掉alert,保存文本后，刷新界面，点击按钮
+             // ----------------------------------------
+
+            sensors.unbind("$identity_mp_unionid",document.getElementById("input_unionid").value)
+            // ----------------------------------------
+
+        }
+    </script>
+   </p>
+   <p>
+    <label for="TestLabel">email: </label>
+    <input type="text" sensors-disable=true placeholder="输入email" id="input_email"/>
+    <button type="button" id="app_bind">绑定邮箱</button>
+    <button type="button" id="app_unbind">解绑</button>
+    <script>
+        document.getElementById("app_bind").onclick = function(){
+            //alert("请编辑器打开文件，解锁邮箱绑定功能")
+            // step4 解注释下面------中间的代码（神策sdk bind接口），设备号进行绑定，并注释掉alert,保存文本后，刷新界面，点击按钮
+             // ----------------------------------------
+            sensors.bind("$identity_email",document.getElementById("input_email").value)
+             // ----------------------------------------
+        }
+        document.getElementById("app_unbind").onclick = function(){
+            //alert("请编辑器打开文件，解锁邮箱解绑功能")
+            // step7 解注释下面------中间的代码（神策sdk unbind接口），设备号进行解绑，并注释掉alert,保存文本后，刷新界面，点击按钮
+             // ----------------------------------------
+
+            sensors.unbind("$identity_email",document.getElementById("input_email").value)
+
+             // ----------------------------------------
+        }
+    </script>
+   </p>
+   <p>
+    <label for="TestLabel">email: </label>
+    <input type="text" sensors-disable=true placeholder="输入email" id="reset_input_email"/>
+    <button type="button" id="app_bind2">重置匿名id并绑定邮箱</button>
+    <!-- <button type="button" id="app_unbind">解绑</button> -->
+    <script>
+        document.getElementById("app_bind2").onclick = function(){
+            //alert("请编辑器打开文件，解锁[重置匿名id并绑定邮箱]绑定功能")
+            // step8 解注释下面------中间的代码（神策sdk bind接口），设备号进行绑定，并注释掉alert,保存文本后，刷新界面，点击按钮
+             // ----------------------------------------
+
+            sensors.resetAnonymousIdentity();
+            sensors.bind("$identity_email",document.getElementById("reset_input_email").value)
+             // ----------------------------------------
+        }
+    </script>
+   </p>
+  
+
+
+    <p>
+        <label for="TestLabel">distinct id </label>
+        <script>
+            window.onload=function()
+            {
+                str_d=sensors.store.getDistinctId();
+                key_values_d="预置属性名：预置属性值 \n ";
+                for(let i in str_d){
+                    key_values_d=key_values_d+i+"："+str_d[i]+' \n ';
+                };
+                document.getElementById('distinct_id_text').innerText=sensors.store.getDistinctId();
+            }
+        </script>
+        <div id="distinct_id_text" style="width:800px; height:30px;"></div>
+
+    </p>
+   
+
+    <h2><strong>2.事件上报</strong></h2>
+
+    <p>
+        <label for="TestLabel">预置事件 </label>
+        <button type="button" id="pageview">Web 元素点击($WebClick)</button>
+        <button type="button" id="web_click">Web 页面浏览($pageview)</button>
+    </p>
+    <p>
+        <label for="TestLabel">自定义事件: </label>
+        <input type="text" sensors-disable=true placeholder="输入事件名" id="input_event"/>
+        <label for="TestLabel">事件属性（城市）</label>
+        <input type="text" sensors-disable=true placeholder="输入属性值" id="input_city"/>
+        <button type="button" id="track_event" >事件上报</button>
+        <script>
+            document.getElementById("track_event").onclick = function(){
+    
+                const property = {}
+                var input_event = document.getElementById("input_event").value;
+                 //alert("请编辑器打开文件，解锁事件上报功能")
+            // step9 解注释下面的------中间的代码（神策sdk track接口），并注释掉alert,保存文本后，刷新界面，点击按钮
+
+             // ----------------------------------------
+                sensors.track(input_event,{
+                city:document.getElementById("input_city").value
+                })
+            // ----------------------------------------
+            }      
+        </script>
+    </p>
+    
+    <p>
+        <label for="TestLabel">用户属性设置 </label>
+        <input type="text" sensors-disable=true placeholder="输入用户属性（姓名）" id="input_profile"/>
+        <button type="button" id="track_profile">属性上报</button>
+        <script>
+            document.getElementById("track_profile").onclick = function(){
+             //alert("请编辑器打开文件，解锁属性上报功能")
+             // step10 解注释下面的代码（神策sdk profile_set接口），并注释掉alert,保存文本后，刷新界面，点击按钮
+             // ----------------------------------------
+
+            sensors.setProfile({author:document.getElementById("input_profile").value})
+
+            // ----------------------------------------
+            }
+            
+        </script>
+    </p>
+    
+    
+   
+</html>
